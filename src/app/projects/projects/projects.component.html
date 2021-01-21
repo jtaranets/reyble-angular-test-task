@@ -1,0 +1,18 @@
+<ng-container *ngIf="projects$ | async | mapProjects as projects">
+  <div class="project" *ngIf="projects.length; else noProjects">
+    <div class="project__header">
+      <h1>{{ 'Projects of ' + projects[0]?.owner?.login }}</h1>
+      <img class="project__owner_img" [src]="projects[0].owner.avatar_url" alt="avatar" />
+    </div>
+    <div class="project__container">
+      <div class="project__card" *ngFor="let project of projects">
+        <a target="_blank" [href]="project.html_url">{{ project.name }}</a>
+        <p>{{ 'Created at ' + (project.created_at | date) }}</p>
+        <p>{{ project.language }}</p>
+      </div>
+    </div>
+  </div>
+  <ng-template #noProjects>
+    <p>Couldn't retrieve projects</p>
+  </ng-template>
+</ng-container>
